@@ -20,3 +20,6 @@ In the dynamic determining algorithm we will calculate a score (TB-score). The T
 Z = BadooScore - MutualInterests * Factor
 
 Factor will be 0.45, but should later be adjustable through the GUI.
+
+## Future plans
+In a future version, we'd like to rewrite the entire project, to use some sort of optimization technique to determine which person(s) to match with depending on multiple features. This could be particle swarm optimization. *Finding the suitable partner in a multi dimensional search space*.
