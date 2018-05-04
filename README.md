@@ -3,7 +3,7 @@ Online dating sure is a fascinating phenomena. Unfortunately finding the right p
 
 ## Technology
 For technology we will use
- * Angular(5), since version 6 is still release candidates, and we've bad experience using release candidate versions of Angular.
+ * Angular(5), since version 6 is still in the release candidate phase, and we've bad experience using release candidate versions of Angular.
  * Electron since it works on multiple platforms.
  
 ## Finding the partner
