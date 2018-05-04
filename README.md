@@ -6,6 +6,7 @@ For technology we will use
  * Angular,
  * Electron, and
  * Puppeteer
+
 Styling will be done using Bootstrap 4.
 
 # Installation
