@@ -3,8 +3,13 @@ Online dating sure is a fascinating phenomena. Unfortunately finding the right p
 
 ## Technology
 For technology we will use
- * Angular(5), since version 6 is still in the release candidate phase, and we've bad experience using release candidate versions of Angular.
- * Electron since it works on multiple platforms.
+ * Angular,
+ * Electron, and
+ * Puppeteer
+Styling will be done using Bootstrap 4.
+
+# Installation
+Install necessary packages using `npm install`. Run the program using `npm run electron-build`.
  
 ## Finding the partner
 We should be able to determine wheter a person is a potential partner in multiple ways. We'll call the determining algorithms for *fixed* and *dynamic*.
