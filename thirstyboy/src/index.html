@@ -1,14 +1,44 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Thirstyboy</title>
-  <base href="./">
+<html>
+  <head>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <title>Thirstyboy - Badoo Bot</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1>Thirstyboy</h1>
+        </div>
+      </div>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+      <form>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" class="form-control" id="email" name="email"/>
+            </div>
+          </div>
+          
+          <div class="col-12">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password"/>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button type="submit" id="perform-login" class="btn btn-info">Login</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        <h3>Screenshot</h3>
+        <img class="img-fluid" id="image-feedback"/>
+      </div>
+    </div>
+  </body>
 </html>
+
+<script src="main.js"></script>

@@ -1,2 +1,5 @@
 thirstyboy/dist
 thirstyboy/node_modules
+thirstyboy/*.js
+thirstyboy/src/*.js
+thirstyboy/src/screendump/

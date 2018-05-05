@@ -1,54 +1,34 @@
 {
-  "name": "thirstyboy",
+  "name": "thirstyboy-badoo-bot",
   "version": "0.0.0",
-  "license": "MIT",
-  "main": "main.js",
+  "description": "Online dating sure is a fascinating phenomena. Unfortunately finding the right partner, can take up a lot of our precious time. What if we could have a bot automatically do the work, and find potential partners for us?",
+  "main": "index.js",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "electron": "electron .",
-    "electron-build": "ng build --prod && electron ."
+    "start": "cross-env NODE_ENV=development electron index.js",
+    "startp": "cross-env NODE_ENV=production electron index.js",
+    "electron-local": "tsc && electron .",
+    "pack": "build --dir",
+    "dist": "electron-builder --publish never",
+    "publish": "electron-builder --publish onTag"
   },
-  "private": true,
-  "dependencies": {
-    "@angular/animations": "^5.2.0",
-    "@angular/common": "^5.2.0",
-    "@angular/compiler": "^5.2.0",
-    "@angular/core": "^5.2.0",
-    "@angular/forms": "^5.2.0",
-    "@angular/http": "^5.2.0",
-    "@angular/platform-browser": "^5.2.0",
-    "@angular/platform-browser-dynamic": "^5.2.0",
-    "@angular/router": "^5.2.0",
-    "bootstrap": "4.0.0-beta.2",
-    "core-js": "^2.4.1",
-    "puppeteer": "^1.3.0",
-    "rxjs": "^5.5.6",
-    "zone.js": "^0.8.19"
-  },
+  "author": "KristofferK",
+  "license": "MIT",
   "devDependencies": {
-    "@angular/cli": "1.6.8",
-    "@angular/compiler-cli": "^5.2.0",
-    "@angular/language-service": "^5.2.0",
-    "@types/jasmine": "~2.8.3",
-    "@types/jasminewd2": "~2.0.2",
-    "@types/node": "~6.0.60",
-    "codelyzer": "^4.0.1",
-    "electron": "^2.0.0",
-    "jasmine-core": "~2.8.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~2.0.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "^1.2.1",
-    "karma-jasmine": "~1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.1.2",
-    "ts-node": "~4.1.0",
-    "tslint": "~5.9.1",
-    "typescript": "~2.5.3"
+    "cross-env": "^5.1.3",
+    "electron": "^1.8.2",
+    "electron-builder": "^19.56.0"
+  },
+  "build": {
+    "appId": "my.id",
+    "mac": {
+      "category": "your.app.category.type"
+    }
+  },
+  "dependencies": {
+    "@types/puppeteer": "^1.3.1",
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.1",
+    "puppeteer": "^1.3.0"
   }
 }

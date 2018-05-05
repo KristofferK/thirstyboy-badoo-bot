@@ -2,15 +2,12 @@
 Online dating sure is a fascinating phenomena. Unfortunately finding the right partner, can take up a lot of our precious time. What if we could have a bot automatically do the work, and find potential partners for us?
 
 ## Technology
-For technology we will use
- * Angular,
- * Electron, and
- * Puppeteer
+For technology we will use Electron and Puppeteer. Styling will be done using Bootstrap 4.
 
-Styling will be done using Bootstrap 4.
+For the first iterations we will just print to console. However later one we might decide to add a view engine like Angular or Vue.
 
 # Installation
-Install necessary packages using `npm install`. Run the program using `npm run electron-build`.
+Install necessary packages using `npm install`. Run the program using `npm run electron-local`.
  
 ## Finding the partner
 We should be able to determine wheter a person is a potential partner in multiple ways. We'll call the determining algorithms for *fixed* and *dynamic*.
@@ -26,6 +23,9 @@ In the dynamic determining algorithm we will calculate a score (TB-score). The T
 Z = BadooScore - MutualInterests * Factor
 
 Factor will be 0.45, but should later be adjustable through the GUI.
+
+# Proof of Concept
+This is entirely made as a proof of concept. Please also note that when you hit the login button, your credentials (email and password) will be stored in plaintext on your system.
 
 ## Future plans
 In a future version, we'd like to rewrite the entire project, to use some sort of optimization technique to determine which person(s) to match with depending on multiple features. This could be particle swarm optimization. *Finding a suitable partner in a multi dimensional search space*.
