@@ -18,9 +18,9 @@ The fixed determining algorithm will require the person, to have a Badoo-score o
 Now we'd never judge a partner by their looks, so we will of course set the default value of X to 0.0 and Y to 3.
 
 ### Dynamic
-In the dynamic determining algorithm we will calculate a score (TB-score). The TB-score must be at least Z, where Z is calculated as
+In the dynamic determining algorithm we will calculate a score (TBScore). The TB-score must be at least Z, where Z is calculated as
 
-Z = BadooScore - MutualInterests * Factor
+Z = BadooScore + MutualInterests * Factor
 
 Factor will be 0.45, but should later be adjustable through the GUI.
 

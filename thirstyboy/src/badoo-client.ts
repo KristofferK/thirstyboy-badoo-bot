@@ -5,6 +5,18 @@ export interface LoginMessage {
   succesfullySignedIn: boolean;
 }
 
+export interface Person {
+  sharedInterests: number;
+  age: number;
+  name: string;
+  badooScore: number | null;
+}
+
+export interface LikeResponse {
+  screendumpPath: string;
+  isLike: boolean;
+}
+
 export class BadooClient {
   private constructor(private browser: puppeteer.Browser, private page: puppeteer.Page) {
   }
@@ -37,5 +49,39 @@ export class BadooClient {
     });
 
     return Promise.resolve({screendumpPath, succesfullySignedIn});
+  }
+
+  public async getCurrentPerson(): Promise<Person> {
+    const person: Person = await this.page.evaluate(() => {
+      const ageElement = <HTMLSpanElement>document.querySelector('.profile-header__age');
+      const nameElement = <HTMLSpanElement>document.querySelector('.profile-header__name');
+      const sharedInterestsElement = <HTMLSpanElement>document.querySelector('[data-interests-type="count"]');
+      const badooScoreElement = <HTMLDivElement>document.querySelector('[data-score]');
+
+      const age = parseInt(ageElement.innerText.substring(2));
+      const name = nameElement.innerText;
+      const sharedInterests = sharedInterestsElement != null ? parseInt(sharedInterestsElement.innerText) : 0;
+      const badooScore = badooScoreElement != null ? parseFloat(badooScoreElement.attributes['data-score'].value) : null;
+
+      return { age, name, sharedInterests, badooScore };
+    });
+    return Promise.resolve(person);
+  }
+
+  public calculateTBScore(person: Person): number {
+    const badooScore = person.badooScore != null ? person.badooScore : 6.3;
+    return badooScore + person.sharedInterests * 0.45;
+  }
+
+  public async likeOrDislikePerson(person: Person, like: boolean): Promise<LikeResponse> {
+    await this.page.evaluate((like: boolean) => {
+      const choice = like ? 'yes' : 'no';
+      const element = <HTMLSpanElement>document.querySelector('[data-choice="'+choice+'"]');
+      element.click();
+    }, like);
+    await this.page.waitFor(100);
+    const screendumpPath = 'screendump/person.jpg';
+    await this.page.screenshot({path: `src/${screendumpPath}`, fullPage: true});
+    return Promise.resolve({ screendumpPath, isLike: like });
   }
 }

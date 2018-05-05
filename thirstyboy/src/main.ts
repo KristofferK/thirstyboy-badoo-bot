@@ -21,6 +21,21 @@ const updateDiv = (div: HTMLDivElement) => (message: string, className: string) 
 const statusBar = <HTMLDivElement>document.getElementById('status-bar');
 const updateStatusBar = updateDiv(statusBar);
 
+const findPersonAndPerformAction = () => {
+  badoo.getCurrentPerson().then(person => {
+    console.log(person);
+    console.log('Thirstyboy score', badoo.calculateTBScore(person));
+    const shouldLike = person.sharedInterests >= 2;
+    console.log(shouldLike ? 'That\'s a like' : 'That\'s a dislike');
+    badoo.likeOrDislikePerson(person, shouldLike).then(likeResponse => {
+      console.log(likeResponse);
+      console.log(' --- ');
+      imageFeedback.src = likeResponse.screendumpPath + "?" + (+new Date());
+      setTimeout(findPersonAndPerformAction, 700);
+    });
+  });
+};
+
 const loginButton = <HTMLButtonElement>document.querySelector("#perform-login");
 loginButton.addEventListener('click', (e: MouseEvent) => {
   const form = new FormData(document.querySelector('form'))
@@ -40,6 +55,7 @@ loginButton.addEventListener('click', (e: MouseEvent) => {
     }
     else {
       updateStatusBar('Sucessfully signed in.', 'bg-success');
+      findPersonAndPerformAction();
     }
   })
 });
