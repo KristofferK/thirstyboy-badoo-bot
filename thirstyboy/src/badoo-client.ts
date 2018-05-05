@@ -6,7 +6,7 @@ export interface LoginMessage {
 }
 
 export interface Person {
-  sharedInterests: number;
+  mutualInterests: number;
   age: number;
   name: string;
   badooScore: number | null;
@@ -55,22 +55,22 @@ export class BadooClient {
     const person: Person = await this.page.evaluate(() => {
       const ageElement = <HTMLSpanElement>document.querySelector('.profile-header__age');
       const nameElement = <HTMLSpanElement>document.querySelector('.profile-header__name');
-      const sharedInterestsElement = <HTMLSpanElement>document.querySelector('[data-interests-type="count"]');
+      const mutualInterestsElement = <HTMLSpanElement>document.querySelector('[data-interests-type="count"]');
       const badooScoreElement = <HTMLDivElement>document.querySelector('[data-score]');
 
       const age = parseInt(ageElement.innerText.substring(2));
       const name = nameElement.innerText;
-      const sharedInterests = sharedInterestsElement != null ? parseInt(sharedInterestsElement.innerText) : 0;
+      const mutualInterests = mutualInterestsElement != null ? parseInt(mutualInterestsElement.innerText) : 0;
       const badooScore = badooScoreElement != null ? parseFloat(badooScoreElement.attributes['data-score'].value) : null;
 
-      return { age, name, sharedInterests, badooScore };
+      return { age, name, mutualInterests, badooScore };
     });
     return Promise.resolve(person);
   }
 
   public calculateTBScore(person: Person): number {
     const badooScore = person.badooScore != null ? person.badooScore : 6.3;
-    return badooScore + person.sharedInterests * 0.45;
+    return badooScore + person.mutualInterests * 0.45;
   }
 
   public async likeOrDislikePerson(person: Person, like: boolean): Promise<LikeResponse> {

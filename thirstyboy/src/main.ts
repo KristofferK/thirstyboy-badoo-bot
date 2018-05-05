@@ -25,7 +25,7 @@ const findPersonAndPerformAction = () => {
   badoo.getCurrentPerson().then(person => {
     console.log(person);
     console.log('Thirstyboy score', badoo.calculateTBScore(person));
-    const shouldLike = person.sharedInterests >= 2;
+    const shouldLike = person.mutualInterests >= 2;
     console.log(shouldLike ? 'That\'s a like' : 'That\'s a dislike');
     badoo.likeOrDislikePerson(person, shouldLike).then(likeResponse => {
       console.log(likeResponse);
