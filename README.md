@@ -22,7 +22,7 @@ In the dynamic determining algorithm we will calculate a score, *TBScore*, as
 
 TBScore = BadooScore + MutualInterests * Factor
 
-Factor will be 0.45, but should later be adjustable through the GUI.
+Factor will be 0.45, but should later be adjustable through the GUI. Unfortunately often enough persons won't have a BadooScore. In that case we will assume it is 6.3.
 
 # Proof of Concept
 This is entirely made as a proof of concept. Please also note that when you hit the login button, your credentials (email and password) will be stored in plaintext on your system.
