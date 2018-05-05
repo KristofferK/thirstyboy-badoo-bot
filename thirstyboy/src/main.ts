@@ -29,11 +29,9 @@ runElem.addEventListener('click', (e: MouseEvent) => {
 
   document.querySelector('form').style.display = 'none';
 
-  console.log('Must login with', email, password);
   updateStatusBar('Attempting to sign in.', 'bg-info');
   imageFeedback.src = '';
   badoo.login(email, password).then(loginMessage => {
-    console.log('Log in?', loginMessage);
     imageFeedback.src = loginMessage.screendumpPath + "?" + (+new Date());
     if (!loginMessage.succesfullySignedIn) {
       document.querySelector('form').style.display = 'block';
