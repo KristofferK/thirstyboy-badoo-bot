@@ -24,15 +24,15 @@ const updateStatusBar = updateDiv(statusBar);
 const findPersonAndPerformAction = () => {
   badoo.getCurrentPerson().then(person => {
     console.log(person);
-    console.log('Thirstyboy score', badoo.calculateTBScore(person));
-    const shouldLike = person.mutualInterests >= 2;
-    console.log(shouldLike ? 'That\'s a like' : 'That\'s a dislike');
-    badoo.likeOrDislikePerson(person, shouldLike).then(likeResponse => {
-      console.log(likeResponse);
-      console.log(' --- ');
-      imageFeedback.src = likeResponse.screendumpPath + "?" + (+new Date());
-      setTimeout(findPersonAndPerformAction, 700);
-    });
+    const shouldLike = person.mutualInterests >= 2 || person.description.toLowerCase().indexOf('lol') != -1;
+    console.log((shouldLike ? 'Liking ' : 'Disliking ') + person.name + ' in 3 seconds!');
+    window.setTimeout(() => {
+      badoo.likeOrDislikePerson(person, shouldLike).then(likeResponse => {
+        console.log(likeResponse.isLike);
+        imageFeedback.src = likeResponse.screendumpPath + "?" + (+new Date());
+        findPersonAndPerformAction();
+      });
+    }, 3000);
   });
 };
 
