@@ -6,7 +6,7 @@ For technology we will use Electron and Puppeteer. Styling will be done using Bo
 
 For the first iterations we will just print to console. However later one we might decide to add a view engine like Angular or Vue.
 
-# Installation
+## Installation
 Install necessary packages using `npm install`. Run the program using `npm run electron-local`.
  
 ## Finding the partner
