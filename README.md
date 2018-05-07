@@ -24,8 +24,8 @@ TBScore = BadooScore + MutualInterests * Factor
 
 Factor will be 0.45, but should later be adjustable through the GUI. Unfortunately often enough persons won't have a BadooScore. In that case we will assume it is 6.3.
 
-# Proof of Concept
+## Proof of Concept
 This is entirely made as a proof of concept. Please also note that when you hit the login button, your credentials (email and password) will be stored in plaintext on your system.
 
-## Future plans
+### Future plans
 In a future version, we'd like to rewrite the entire project, to use some sort of optimization technique to determine which person(s) to match with depending on multiple features. This could be particle swarm optimization. *Finding a suitable partner in a multi dimensional search space*.
