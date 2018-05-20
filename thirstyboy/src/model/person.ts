@@ -9,4 +9,5 @@ export class Person {
   languages: string[];
   badooScore: number | null;
   onlineStatus: string;
+  images: string[];
 }

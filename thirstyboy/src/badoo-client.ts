@@ -65,6 +65,7 @@ export class BadooClient {
       const mutualInterestsCount = mutualInterestsElement != null ? parseInt(mutualInterestsElement.innerText) : 0;
       const badooScore = badooScoreElement != null ? parseFloat(badooScoreElement.attributes['data-score'].value) : null;
       const onlineStatus = onlineStatusElement != null ? onlineStatusElement.innerHTML.trim() : '';
+      const images = [...document.querySelectorAll('[data-lazy-url]')].map(e => 'https:' + e.attributes['src'].vlaue);
       
       let interests: Interest[] = [];
       if (interestsElements != null) interests = interestsElements.map(e => {
@@ -85,6 +86,7 @@ export class BadooClient {
       p.languages = languages;
       p.badooScore = badooScore;
       p.onlineStatus = onlineStatus;
+      p.images = images;
       return p;
     }, new Person());
     return Promise.resolve(person);
