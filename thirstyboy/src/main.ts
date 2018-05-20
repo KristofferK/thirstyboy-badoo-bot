@@ -3,7 +3,7 @@ export = 0;
 import { BadooClient } from './badoo-client';
 import { Credentials, CredentialsSaver } from './credentials-saver';
 import { ILikeDecider } from './like-deciders/i-like-decider';
-import { MutualInterestsDecider } from './like-deciders/mutual-interests-decider';
+import { AlternativeDecider } from './like-deciders/alternative-decider';
 
 const loginButton = <HTMLButtonElement>document.querySelector("#perform-login");
 
@@ -28,7 +28,7 @@ const updateDiv = (div: HTMLDivElement) => (message: string, className: string) 
 const statusBar = <HTMLDivElement>document.getElementById('status-bar');
 const updateStatusBar = updateDiv(statusBar);
 
-const likeDecider: ILikeDecider = new MutualInterestsDecider(3); 
+const likeDecider: ILikeDecider = new AlternativeDecider(); 
 
 const findPersonAndPerformAction = () => {
   badoo.getCurrentPerson().then(person => {
