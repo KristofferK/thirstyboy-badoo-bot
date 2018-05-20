@@ -1,24 +1,9 @@
 import * as puppeteer from 'puppeteer';
-
-export interface LoginMessage {
-  screendumpPath: string;
-  succesfullySignedIn: boolean;
-}
-
-export interface Person {
-  mutualInterests: number;
-  age: number;
-  name: string;
-  description: string;
-  interests: string[];
-  languages: string[];
-  badooScore: number | null;
-}
-
-export interface LikeResponse {
-  screendumpPath: string;
-  isLike: boolean;
-}
+import { LoginMessage } from './model/login-message';
+import { Person } from './model/person';
+import { LikeResponse } from './model/like-response';
+import { ILikeDecider } from './like-deciders/i-like-decider';
+import { Interest } from './model/interest';
 
 export class BadooClient {
   private constructor(private browser: puppeteer.Browser, private page: puppeteer.Page) {
@@ -32,7 +17,6 @@ export class BadooClient {
   }
 
   public async login(email: string, password: string): Promise<LoginMessage> {
-    const screendumpPath = 'screendump/post_login.jpg';
     await this.page.goto('https://badoo.com/signin/?f=top');
     await this.page.evaluate((email: string, password: string) => {
       const emailField = <HTMLInputElement>document.querySelector('input[name="email"]');
@@ -44,20 +28,30 @@ export class BadooClient {
     }, email, password);
     await this.page.waitFor(2000);
     await this.page.goto('https://badoo.com/encounters');
-    await this.page.waitFor(2000);
-    await this.page.screenshot({path: `src/${screendumpPath}`, fullPage: true});
+    await this.page.waitFor(3000);
 
-    const succesfullySignedIn: boolean = await this.page.evaluate(() => {
-      return document.querySelector('.sidebar__sign') == null;
+    let succesfullySignedIn: boolean = await this.page.evaluate(() => {
+      return document.querySelector('.sidebar__sign') === null;
     });
+    const name: string = await this.page.evaluate(() => {
+      const element = <HTMLAnchorElement>document.querySelector('.sidebar-info__name');
+      return element === null ? '<unknown>' : element.innerText;
+    })
 
-    return Promise.resolve({screendumpPath, succesfullySignedIn});
+    if (name === '<unknown>') {
+      succesfullySignedIn = false;
+    }
+    await this.page.screenshot({ path: 'src/screendump/post_login.jpg', fullPage: true });
+
+    return Promise.resolve({name, succesfullySignedIn});
   }
 
   public async getCurrentPerson(): Promise<Person> {
+    await this.page.waitFor(125);
+    await this.page.waitForSelector('.b-link.js-profile-header-toggle-layout');
     await this.page.click('.b-link.js-profile-header-toggle-layout');
-    await this.page.waitFor(425);
-    const person: Person = await this.page.evaluate(() => {
+    await this.page.waitFor(700);
+    const person: Person = await this.page.evaluate((p: Person) => {
       const ageElement = <HTMLSpanElement>document.querySelector('.profile-header__age');
       const nameElement = <HTMLSpanElement>document.querySelector('.profile-header__name');
       const mutualInterestsElement = <HTMLSpanElement>document.querySelector('[data-interests-type="count"]');
@@ -68,37 +62,40 @@ export class BadooClient {
 
       const age = parseInt(ageElement.innerText.substring(2));
       const name = nameElement.innerText;
-      const mutualInterests = mutualInterestsElement != null ? parseInt(mutualInterestsElement.innerText) : 0;
+      const mutualInterestsCount = mutualInterestsElement != null ? parseInt(mutualInterestsElement.innerText) : 0;
       const badooScore = badooScoreElement != null ? parseFloat(badooScoreElement.attributes['data-score'].value) : null;
       
-      let interests: string[] = [];
-      if (interestsElements != null) interests = interestsElements.map(e => e.innerText.trim())
+      let interests: Interest[] = [];
+      if (interestsElements != null) interests = interestsElements.map(e => {
+        return { title: e.innerText.trim(), isMutual: e.classList.contains('intr--match') };
+      });
 
       let description: string = '';
       if (descriptionElement != null) description = descriptionElement.innerText;
 
       let languages: string[] = [];
-      if (languageElement != null) languages = languageElement.innerText.split(',').map(e => e.trim());
+      if (languageElement != null) languages = languageElement.innerText.split(',').map(e => e.split('(')[0].trim());
 
-      return { age, name, mutualInterests, description, interests, languages, badooScore };
-    });
+      p.age = age,
+      p.mutualInterestsCount = mutualInterestsCount;
+      p.name = name;
+      p.description = description;
+      p.interests = interests;
+      p.languages = languages;
+      p.badooScore = badooScore;
+      return p;
+    }, new Person());
     return Promise.resolve(person);
   }
 
-  public calculateTBScore(person: Person): number {
-    const badooScore = person.badooScore != null ? person.badooScore : 6.3;
-    return badooScore + person.mutualInterests * 0.45;
-  }
-
-  public async likeOrDislikePerson(person: Person, like: boolean): Promise<LikeResponse> {
+  public async likeOrDislikePerson(person: Person, likeDecider: ILikeDecider): Promise<LikeResponse> {
+    const likeResponse = likeDecider.shouldLike(person);
     await this.page.evaluate((like: boolean) => {
       const choice = like ? 'yes' : 'no';
       const element = <HTMLSpanElement>document.querySelector('[data-choice="'+choice+'"]');
       element.click();
-    }, like);
+    }, likeResponse.isLike);
     await this.page.waitFor(100);
-    const screendumpPath = 'screendump/person.jpg';
-    await this.page.screenshot({path: `src/${screendumpPath}`, fullPage: true});
-    return Promise.resolve({ screendumpPath, isLike: like });
+    return Promise.resolve(likeResponse);
   }
 }
