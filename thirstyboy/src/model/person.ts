@@ -8,4 +8,5 @@ export class Person {
   interests: Interest[];
   languages: string[];
   badooScore: number | null;
+  lastOnline: string;
 }
