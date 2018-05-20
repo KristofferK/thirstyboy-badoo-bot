@@ -58,12 +58,13 @@ export class BadooClient {
       const badooScoreElement = <HTMLDivElement>document.querySelector('[data-score]');
       const descriptionElement = <HTMLSpanElement>document.querySelector('.profile-section__txt');
       const interestsElements = <HTMLSpanElement[]>([...document.querySelectorAll('[data-interests-id')]);
-      const languageElement = <HTMLDivElement>document.querySelector('.js-profile-languages-container .profile-section__content');
+      const languageElement = <HTMLDivElement>document.querySelector('.js-profile-languages-container .profile-section__content');const onlineStatusElement = document.querySelector('.online-status .tooltip__content');
 
       const age = parseInt(ageElement.innerText.substring(2));
       const name = nameElement.innerText;
       const mutualInterestsCount = mutualInterestsElement != null ? parseInt(mutualInterestsElement.innerText) : 0;
       const badooScore = badooScoreElement != null ? parseFloat(badooScoreElement.attributes['data-score'].value) : null;
+      const onlineStatus = onlineStatusElement != null ? onlineStatusElement.innerHTML.trim() : '';
       
       let interests: Interest[] = [];
       if (interestsElements != null) interests = interestsElements.map(e => {
@@ -83,6 +84,7 @@ export class BadooClient {
       p.interests = interests;
       p.languages = languages;
       p.badooScore = badooScore;
+      p.onlineStatus = onlineStatus;
       return p;
     }, new Person());
     return Promise.resolve(person);

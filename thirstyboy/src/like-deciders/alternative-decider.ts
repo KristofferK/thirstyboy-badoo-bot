@@ -27,7 +27,7 @@ export class AlternativeDecider implements ILikeDecider {
       return { isLike: true, message: 'Matched languages: ' + languagesMatched.join(', ') + '.' };
     }
 
-    if (person.lastOnline.indexOf('7+') !== -1) {
+    if (person.onlineStatus.indexOf('7+') !== -1) {
       return { isLike: false, message: 'User seems to be inactive.' };
     }
 
