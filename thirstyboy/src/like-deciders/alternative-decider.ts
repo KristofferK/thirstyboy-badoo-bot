@@ -9,7 +9,7 @@ export class AlternativeDecider implements ILikeDecider {
     }
 
     const descriptionWithInterests = (person.description + '\n\n' + person.interests.map(e => e.title).join(', ')).toLowerCase();
-    const keywords = [':3', '^^', 'XD', '😺', '😹', '😽', '😻', '🙀', 'emo', 'goth', 'punk', 'anime', 'black veil brides', 'bring me the horizon', 'slipknot', 'korn', 'rob zombie', 'heavy metal', 'cosplay', 'Alternativ', 'japan', 'kina', 'korea', 'vietnam', 'thailand', 'asien', 'software', 'programmør', 'datamatiker', 'webudvikl', 'vegan', 'datalogi', 'computer science'];
+    const keywords = [':3', '^^', 'XD', '😺', '😹', '😽', '😻', '🙀', 'emo', 'goth', 'punk', 'anime', 'black veil brides', 'bring me the horizon', 'slipknot', 'korn', 'rob zombie', 'heavy metal', 'cosplay', 'alternativ', 'japan', 'kina', 'korea', 'vietnam', 'thailand', 'asien', 'software', 'programmør', 'datamatiker', 'webudvikl', 'vegan', 'datalogi', 'computer science'];
     const keywordsMatched = keywords.filter(keyword => descriptionWithInterests.indexOf(keyword) !== -1);
     if (keywordsMatched.length) {
       return { isLike: true, message: 'Matched keywords: ' + keywordsMatched.join(', ') + '.' };
