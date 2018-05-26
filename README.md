@@ -1,6 +1,10 @@
 # thirstyboy-badoo-bot
 Online dating sure is a fascinating phenomena. Unfortunately finding the right partner, can take up a lot of our precious time. What if we could have a bot automatically do the work, and find potential partners for us?
 
+## Still under development
+This project is not ready for production yet. I unfortunately do not have much at the moment. This means the project is getting delayed.
+If you're solely intetrested in the functionality, and not so much the technology or having an actual client for it, you can instead run the code from my GitHub Gist (<https://gist.github.com/KristofferK/2dbe63aaf6987459f655f1c9d9f09c51>) directly in your browser.
+
 ## Technology
 For technology we will use Electron and Puppeteer. Styling will be done using Bootstrap 4.
 
